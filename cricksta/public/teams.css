@@ -1,0 +1,42 @@
+/*html, body{
+	height: 100%;
+	margin: 0;
+}
+.content{
+	min-height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.content > div{
+	display: flex;
+	flex-basis: calc(50%-40px);
+	justify-content: center;
+	flex-direction: column;
+}
+
+.box{
+	margin: 20px;
+}*/
+.row{
+	height: 200px;
+}
+
+.col{
+	width: 50px;
+	height: 100%;
+	display: flex;
+	justify-content: center; 
+	flex-direction: column;
+}
+
+.col > div{
+	padding: 20px;  
+	text-align: center; 
+}
+
+.col > div > .btn{
+	width: 120px;
+	height: 120px;
+}
