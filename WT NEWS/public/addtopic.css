@@ -7,6 +7,7 @@
   justify-content: space-around;
   height: 700px;
 }
+
 .colony-page {
   width: 360px;
   padding: 8% 0 0;
@@ -93,14 +94,9 @@
   color: #EF3B3A;
 }
 
-.status{
+#status{
   font-family: "Roboto", sans-serif;
   background-color:tomato;
-  color: white;
-}
-.approve {
-  background-color:#76b852;
-  font-family: "Roboto", sans-serif;
   color: white;
 }
 

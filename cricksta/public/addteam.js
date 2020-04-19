@@ -8,24 +8,33 @@ document.querySelector("#submitBtn").addEventListener("click",(e)=>{
 	var color = form["color"].value;
 	var captain = form["captain"].value;
 	var cups = form["cups"].value;
-	var newTeam = {
-		name:name,
-		rank:rank,
-		color:color,
-		captain:captain,
-		worldCups:cups
+	if(name == "" || rank == "" || color == "" || captain == "" || cups ==""){
+		status.innerText="Fill all Fields.";
+	} 
+	else if(isNaN(rank) || isNaN(cups)){
+		status.innerText = "Invalid Number input.";
 	}
-	var request = new XMLHttpRequest();
-	request.open('POST',"teams/add/new");
-	request.setRequestHeader("Content-type", "application/json");
-	request.onload = function() {
-	var data = JSON.parse(this.response);
-	if (request.status >= 200 && request.status < 400) {
-	    status.innerText=data.msg;
-	  } else {
-	    	console.log('error');
+	else{
+		var newTeam = {
+			name:name,
+			rank:rank,
+			color:color,
+			captain:captain,
+			worldCups:cups
 		}
+		var request = new XMLHttpRequest();
+		request.open('POST',"teams/add/new");
+		request.setRequestHeader("Content-type", "application/json");
+		request.onload = function() {
+		var data = JSON.parse(this.response);
+		if (request.status >= 200 && request.status < 400) {
+			status.setAttribute('class','approve');
+		    status.innerText=data.msg;
+		  } else {
+		    	console.log('error');
+			}
+		}
+		request.send(JSON.stringify(newTeam));
+		form.reset();
 	}
-	request.send(JSON.stringify(newTeam));
-	form.reset();
-})
+});

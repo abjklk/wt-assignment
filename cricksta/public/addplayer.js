@@ -8,24 +8,33 @@ document.querySelector("#submitBtn").addEventListener("click",(e)=>{
 	var dob = form["dob"].value;
 	var doj = form["doj"].value;
 	var team = form["team"].value;
-	var newPlayer = {
-		jerseyId: jno,
-		name: name,
-		dob: dob,
-		doj: doj,
-		team: team
+	if(jno == "" || name == "" || dob=="" || doj == "" || team == ""){
+		status.innerText="Fill all Fields.";
 	}
-	var request = new XMLHttpRequest();
-	request.open('POST',"players/add/new");
-	request.setRequestHeader("Content-type", "application/json");
-	request.onload = function() {
-	var data = JSON.parse(this.response);
-	if (request.status >= 200 && request.status < 400) {
-	    status.innerText=data.msg;
-	  } else {
-	    	console.log('error');
+	else if(isNaN(jno)){
+		status.innerText="Invalid Jersey Number.";
+	}
+	else{
+		var newPlayer = {
+			jerseyId: jno,
+			name: name,
+			dob: dob,
+			doj: doj,
+			team: team
 		}
-	}
-	request.send(JSON.stringify(newPlayer));
-	form.reset();
-})
+		var request = new XMLHttpRequest();
+		request.open('POST',"players/add/new");
+		request.setRequestHeader("Content-type", "application/json");
+		request.onload = function() {
+		var data = JSON.parse(this.response);
+		if (request.status >= 200 && request.status < 400) {
+			status.setAttribute('class','approve');
+		    status.innerText=data.msg;
+		  } else {
+		    	console.log('error');
+			}
+		}
+		request.send(JSON.stringify(newPlayer));
+		form.reset();
+	}	
+});

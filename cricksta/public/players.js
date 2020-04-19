@@ -10,8 +10,8 @@ function renderItem(player){
 
 	pid.innerText = player.jerseyId;
 	name.innerText = player.name;
-	dob.innerText = player.dob;
-	doj.innerText = player.doj;
+	dob.innerText = player.dob.substring(0,10);
+	doj.innerText = player.doj.substring(0,10);
 	team.innerText = player.team;
 
 	row.append(pid);

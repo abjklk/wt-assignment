@@ -1,31 +1,74 @@
 var container = document.querySelector(".container");
+
+
+function renderCard(doc){
+
+    let card = document.createElement('div');
+    card.setAttribute('class','card');
+
+    let content = document.createElement('div');
+    content.setAttribute('id','content');
+
+    let left = document.createElement('div');
+    left.setAttribute('id','left');
+
+    let title = document.createElement('div');
+    title.setAttribute('id','title');
+    
+
+    let txt = document.createElement('h1');
+    txt.innerText = doc.name;
+    title.append(txt);
+
+    left.append(title);
+
+    sb=document.createElement('button');
+    sb.setAttribute('class','btn btn-danger');
+    sb.setAttribute('id',doc.name);
+    sb.setAttribute('onclick',"getPlayersbyTeam(this.id)");
+    sb.innerText="Show Players";
+    
+    let btn = document.createElement('div');
+    btn.setAttribute("id","btns");
+    btn.append(sb);
+    left.append(btn);
+	
+	let right = document.createElement('div');
+    right.setAttribute('id','right');
+    
+    let dist = document.createElement('h3');
+    dist.innerText = "ICC Rank: "+doc.rank;
+
+    let col = document.createElement('h3');
+    col.innerText = "Jersey Color: "+doc.color;
+
+    let cap = document.createElement('h3');
+    cap.innerText = "Captain: "+doc.captain;
+    
+    let wc = document.createElement('h3');
+	wc.innerText = "World Cups Won: "+doc.worldCups;
+
+    right.append(dist);
+    right.append(col);
+    right.append(cap);
+    right.append(wc);
+ 
+    card.append(content);
+    content.append(left);
+    content.append(right);
+   	container.append(card);
+}
+
+
+
 function renderTeams(teamArr){
-	var i = 0;
-	while(i<teamArr.length){
-		let row = document.createElement('div');
-		row.setAttribute('class',"row");
-		for (var j = 0; j <= 1; j++) {
-			let col = document.createElement('div');
-			col.setAttribute('class',"col");
-			let div = document.createElement('div');
-			if (typeof teamArr[i+j] != "undefined"){
-				let btn = document.createElement('button');
-				btn.setAttribute('class','btn btn-outline-success');
-				btn.setAttribute('id',teamArr[i+j].name);
-				btn.innerText=teamArr[i+j].name;
-				btn.setAttribute('onclick','getPlayersbyTeam(this.id)');
-				div.append(btn);
-			}
-			col.append(div);
-			row.append(col);
-		}
-		container.append(row);
-		i=i+2;
-	}
+	teamArr.forEach((team)=>{
+		renderCard(team);
+	});
 }
 
 function init(){
-	container.innerHTML="<h3>Select Team:</h3>";
+	container.innerHTML="<h2>Select Team:</h2>";
 	var request = new XMLHttpRequest();
 	request.open('GET',"teams/teams");
 	request.setRequestHeader("Content-type", "application/json");
@@ -41,6 +84,7 @@ function init(){
 }
 
 
+
 function renderItem(player){
 	let table = document.querySelector("tbody");
 	let row = document.createElement('tr');
@@ -52,8 +96,8 @@ function renderItem(player){
 
 	pid.innerText = player.jerseyId;
 	name.innerText = player.name;
-	dob.innerText = player.dob;
-	doj.innerText = player.doj;
+	dob.innerText = player.dob.substring(0,10);
+	doj.innerText = player.doj.substring(0,10);
 	team.innerText = player.team;
 
 	row.append(pid);
@@ -65,7 +109,7 @@ function renderItem(player){
 }
 
 function getPlayersbyTeam(teamName){
-	container.innerHTML = `<h2>Players</h2><table class="table table-hover"><thead><tr><th>Player #</th><th>Name</th><th>DOB</th><th>Joining Date</th><th>Team</th></tr></thead><tbody></tbody></table><button class="btn btn-info" onclick="init()">Back</button>`;
+	container.innerHTML = `<h2>Players</h2><table class="table table-hover"><thead><tr><th>Player #</th><th>Name</th><th>DOB</th><th>Joining Date</th><th>Team</th></tr></thead><tbody></tbody></table><br><div style="text-align:center;"><button class="btn btn-danger" onclick="init()">Back</button></div>`;
 	var request = new XMLHttpRequest();
 	var team ={
 		team:teamName
